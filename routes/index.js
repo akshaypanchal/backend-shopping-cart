@@ -35,46 +35,30 @@ router.get('/', function (req, res, next) {
 });
 
 
+router.post('/checkout', function (req, res, next) {
 
+  console.log(req.body.items[0].name);
 
+  req.body.items.map(item =>{
 
+    MongoClient.connect(url, { useUnifiedTopology: true },
+      function (err, db) {
+        if (err) {
+          throw err;
+        }
+        else {
+          var dbo = db.db("mydb");
+          dbo.collection('habstores').updateOne({name:item.name}, 
+            {
+                $inc : {"no_of_items":-1},
+            });
+        }
+      });
 
+  });
 
-//  C R (done) U (done)D 
-router.get('/readfile', function (req, res, next) {
-
-  console.log(req)
-  const fileContent = fs.readFileSync('/home/divya/workspace/stuff/nodejs/express_filecrud/test.txt', { encoding: 'utf8', flag: 'r' });
-  res.json({ filecontent: fileContent })
-});
-
-
-
-
-
-router.post('/update', function (req, res, next) {
-
-  console.log(req)
-  try {
-    fs.appendFileSync('/home/divya/workspace/stuff/nodejs/express_filecrud/test.txt', req.body.data.vb.dfg.g, { encoding: 'utf8', flag: 'a' });
-    res.json({ filecontent: "file read suss=cfuly" })
-  } catch (err) {
-    res.status(500)
-    res.json({ filecontent: "file read unsuccefukt" })
-  }
 
 });
-
-
-router.post('/create', function (req, res, next) {
-
-  var createStream = fs.createWriteStream(`/home/divya/workspace/stuff/nodejs/express_filecrud/${req.query.params}.txt`);
-  createStream.end();
-  res.json({ filecontent: "file created succfuly" })
-});
-
-
-
 
 
 router.delete('/delete', function (req, res, next) {
