@@ -81,6 +81,33 @@ router.post('/wishlist', function (req, res, next) {
 
 });
 
+router.get('/wishlist', function (req, res, next) {
+
+  MongoClient.connect(url, { useUnifiedTopology: true },
+    function (err, db) {
+      if (err) {
+        throw err;
+      }
+      else {
+        var dbo = db.db("mydb");
+        dbo.collection('user').find().toArray(function (err, result) {
+          if (err) {
+            throw err;
+          }
+          else {
+            res.json({ data: result });
+            res.end();
+            db.close();
+          }
+        });
+      }
+    });
+
+
+});
+
+
+
 router.delete('/wishlist', function (req, res, next) {
 
   MongoClient.connect(url, { useUnifiedTopology: true },
