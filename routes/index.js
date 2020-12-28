@@ -72,7 +72,7 @@ router.post('/wishlist', function (req, res, next) {
       }
       else {
         var dbo = db.db("mydb");
-        dbo.collection('user').insertOne(req.body);
+        dbo.collection('wishlist').insertOne(req.body);
       }
       res.send("success");
 
@@ -90,7 +90,7 @@ router.get('/wishlist', function (req, res, next) {
       }
       else {
         var dbo = db.db("mydb");
-        dbo.collection('user').find().toArray(function (err, result) {
+        dbo.collection('wishlist').find().toArray(function (err, result) {
           if (err) {
             throw err;
           }
@@ -120,7 +120,7 @@ router.delete('/wishlist', function (req, res, next) {
           console.log("request header");
           console.log(req.query);
         var dbo = db.db("mydb");
-        dbo.collection('user').deleteOne({
+        dbo.collection('wishlist').deleteOne({
           "_id":req.query._id
         });
       }
@@ -132,5 +132,26 @@ router.delete('/wishlist', function (req, res, next) {
 
 });
 
+
+
+router.post('/signup', function (req, res, next) {
+
+    console.log(req.body);
+
+  MongoClient.connect(url, { useUnifiedTopology: true },
+    function (err, db) {
+      if (err) {
+        throw err;
+      }
+      else {
+        var dbo = db.db("mydb");
+        dbo.collection('users').insertOne(req.body);
+      }
+      res.send("success");
+
+
+    });
+
+});
 
 module.exports = router;
