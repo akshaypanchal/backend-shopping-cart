@@ -1,7 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var fs = require('fs');
 var MongoClient = require('mongodb').MongoClient;
+var bcrypt = require('bcrypt');
+
+
+// bcrypt.compare(hash, hash1, function(err, result){
+//   console.log(result);
+// })
 
 
 var url = "mongodb://localhost:27017/";
