@@ -28,7 +28,8 @@ router.get('/', function (req, res, next) {
             throw err;
           }
           else {
-            res.json({ data: result });
+            res.status(200).json({ data: result });
+            // res.status(200);
             res.end();
             db.close();
           }
@@ -60,7 +61,7 @@ router.patch('/checkout', function (req, res, next) {
         }
       });
 
-    res.send("success");
+    res.status(200).send("success");
 
   });
 
@@ -79,7 +80,7 @@ router.post('/wishlist', function (req, res, next) {
         var dbo = db.db("mydb");
         dbo.collection('wishlist').insertOne(req.body);
       }
-      res.send("success");
+      res.status(201).send("success");
 
 
     });
@@ -100,7 +101,7 @@ router.get('/wishlist', function (req, res, next) {
             throw err;
           }
           else {
-            res.json({ data: result });
+            res.status(200).json({ data: result });
             res.end();
             db.close();
           }
@@ -130,7 +131,7 @@ router.delete('/wishlist', function (req, res, next) {
         });
       }
 
-      res.send("success");
+      res.status(204).send("success");
 
 
     });
@@ -152,7 +153,7 @@ router.post('/signup', function (req, res, next) {
         var dbo = db.db("mydb");
         dbo.collection('users').insertOne(req.body);
       }
-      res.send("success");
+      res.status(201).send("success");
 
 
     });
